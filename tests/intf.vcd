@@ -7,7 +7,7 @@ $end
 $timescale
 	1ps
 $end
-$scope module ifc_test $end
+$scope module intf_test $end
 $var wire 1 ! RST_N $end
 $var wire 8 " cfg_address [7:0] $end
 $var wire 32 # cfg_data_in [31:0] $end

@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-module ifc_test(CLK,
+module intf_test(CLK,
 	   RST_N,
    
    	   din_value,
@@ -49,7 +49,7 @@ module ifc_test(CLK,
 	output [31 : 0] cfg_data_out;
 	output cfg_rdy;
 
-dut ifc(.CLK(CLK),
+dut intf(.CLK(CLK),
 		 .RST_N(RST_N),
 
 		 .din_value(din_value),
@@ -71,7 +71,7 @@ dut ifc(.CLK(CLK),
 		 .cfg_data_out(cfg_data_out), .cfg_rdy(cfg_rdy));			 
 			
 	 	initial begin
-		$dumpfile("ifc.vcd");
+		$dumpfile("intf.vcd");
 		$dumpvars(1);
 		CLK=0;
 		forever begin

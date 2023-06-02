@@ -4,8 +4,8 @@ VERILOG_SOURCES += $(PWD)/../hdl/dut.v
 VERILOG_SOURCES += $(PWD)/../hdl/FIFO2.v
 VERILOG_SOURCES += $(PWD)/wrappers/intf_test.v
 
-intr:
-		
-		$(MAKE) sim MODULE=intf_test TOPLEVEL=-s dut.v
-		$(MAKE) sim MODULE=intf_test TOPLEVEL=FIFO2.v
+intf:
+		rm -rf sim_build
+		$(MAKE) sim MODULE=intf_test TOPLEVEL=intf_test
+	
 include $(shell cocotb-config --makefiles)/Makefile.sim

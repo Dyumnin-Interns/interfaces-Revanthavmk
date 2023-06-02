@@ -11,7 +11,7 @@ def sb_fn(actual_value):
 
 
 @cocotb.test()
-async def ifc_test(dut):
+async def intf_test(dut):
     global exp_value
     
     #a = (10010110, 11100010)
