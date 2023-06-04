@@ -7,5 +7,4 @@ VERILOG_SOURCES += $(PWD)/wrappers/intf_test.v
 intf:
 		rm -rf sim_build
 		$(MAKE) sim MODULE=intf_test TOPLEVEL=intf_test
-	
 include $(shell cocotb-config --makefiles)/Makefile.sim
