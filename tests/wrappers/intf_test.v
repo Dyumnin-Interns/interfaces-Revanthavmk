@@ -75,7 +75,7 @@ dut intf(.CLK(CLK),
 		$dumpvars(1);
 		CLK=0;
 		forever begin
-		    #1 CLK=~CLK;	
+		    #5 CLK=~CLK;	
 		
 			end	
         end
