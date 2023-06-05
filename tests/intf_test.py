@@ -1,6 +1,6 @@
 import cocotb
 from cocotb.triggers import Timer, RisingEdge, ReadOnly, NextTimeStep, FallingEdge
-from cocotb_bus.driver import BusDriver
+from cocotb_bus.drivers import BusDriver
 from cocotb_coverage.coverage import CoverCross, CoverPoint, coverage_db
 from cocotb_bus.monitors import BusMonitor
 import os
@@ -48,7 +48,7 @@ def a_prot_cover(txn):
 
 
 @cocotb.test()
-async def ifc_test(dut):
+async def intf_test(dut):
     global expected_value
     expected_value = []
     dut.RST_N.value = 1
@@ -95,8 +95,8 @@ class InputDriver(BusDriver):
         self.bus.data.value = value
         await ReadOnly()
         await RisingEdge(self.clk)
-        await NextTimeStep()
         self.bus.en.value = 0
+        await NextTimeStep()
 
 
 class IO_Monitor(BusMonitor):
