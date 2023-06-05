@@ -95,8 +95,8 @@ class InputDriver(BusDriver):
         self.bus.data.value = value
         await ReadOnly()
         await RisingEdge(self.clk)
-        self.bus.en.value = 0
         await NextTimeStep()
+        self.bus.en.value = 0
 
 
 class IO_Monitor(BusMonitor):
