@@ -1,6 +1,6 @@
 import cocotb
 from cocotb.triggers import Timer, RisingEdge, ReadOnly, NextTimeStep, FallingEdge
-from cocotb_bus.drivers import BusDriver
+from cocotb_bus.driver import BusDriver
 from cocotb_coverage.coverage import CoverCross, CoverPoint, coverage_db
 from cocotb_bus.monitors import BusMonitor
 import os
