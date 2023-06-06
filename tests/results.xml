@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1685868452" />
-    <testcase name="intf_test" classname="intf_test" file="/home/revanthavmk/interfaces-Revanthavmk/tests/intf_test.py" lineno="13" time="0.038655996322631836" sim_time_ns="4.001" ratio_time="103.50270024362415" />
+    <property name="random_seed" value="1686024278" />
+    <testcase name="ifc_test" classname="intf_test" file="/home/revanthavmk/interfaces-Revanthavmk/tests/intf_test.py" lineno="13" time="0.006426334381103516" sim_time_ns="5.001" ratio_time="778.2041368257031" />
   </testsuite>
 </testsuites>

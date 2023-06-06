@@ -1,5 +1,5 @@
 $date
-	Sun Jun  4 14:17:32 2023
+	Tue Jun  6 09:34:38 2023
 $end
 $version
 	Icarus Verilog
@@ -63,4 +63,7 @@ b0x0 0
 11
 #4000
 01
-#4001
+#5000
+bx -
+11
+#5001

@@ -11,7 +11,7 @@ def sb_fn(actual_value):
 
 
 @cocotb.test()
-async def intf_test(dut):
+async def ifc_test(dut):
     global exp_value
     
     #a = (10010110, 11100010)
@@ -27,7 +27,7 @@ async def intf_test(dut):
     dut.din_en.value = 1
     dut.len_en.value = 1
     dut.len_value.value = 2
-    await Timer(1,'ns')
+    await Timer(2,'ns')
     dut.din_rdy = 1
     adrv = InputDriver(dut, 'din_value', dut.CLK)
     OutputDriver(dut, 'dout_value', dut.CLK, sb_fn)
