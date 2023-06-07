@@ -71,3 +71,7 @@ class OutputDriver(BusDriver):
             await RisingEdge(self.CLK)
             await NextTimeStep()
             self.bus.en.value = 0
+<<<<<<< HEAD
+=======
+
+>>>>>>> dcf5a71e71c070d33f0293ded8f4028b4695b4f5
