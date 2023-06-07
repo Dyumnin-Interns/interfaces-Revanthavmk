@@ -45,6 +45,7 @@ module intf_test(CLK,
 	  .y_rdy(y_rdy)
   );
 
+<<<<<<< HEAD
   initial begin
 	  $dumpfile("intf.vcd");
 	  $dumpvars;
@@ -54,3 +55,36 @@ module intf_test(CLK,
 	  end
   end
   endmodule
+=======
+dut intf(.CLK(CLK),
+		 .RST_N(RST_N),
+
+		 .din_value(din_value),
+		 .din_en(din_en),
+		 .din_rdy(din_rdy),
+		 
+		 .dout_en(dout_en),
+		 .dout_value(dout_value),
+		 .dout_rdy(dout_rdy),
+
+		 .len_value(len_value),
+		 .len_en(len_en),
+		 .len_rdy(len_rdy),
+
+		 .cfg_address(cfg_address),
+		 .cfg_data_in(cfg_data_in),
+		 .cfg_op(cfg_op),
+		 .cfg_en(cfg_en), 
+		 .cfg_data_out(cfg_data_out), .cfg_rdy(cfg_rdy));			 
+			
+	 	initial begin
+		$dumpfile("intf.vcd");
+		$dumpvars(1);
+		CLK=0;
+		forever begin
+		    #5 CLK=~CLK;	
+		
+			end	
+        end
+endmodule
+>>>>>>> 0d7210bdd17cbba5cac2077fc13b7dee264afbc1
