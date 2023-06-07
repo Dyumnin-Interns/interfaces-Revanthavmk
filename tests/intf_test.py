@@ -1,83 +1,73 @@
 import cocotb
-from cocotb.decorators import coroutine
 from cocotb.triggers import (Event, RisingEdge, ReadOnly, Timer, NextTimeStep, Edge)
 from cocotb_bus.drivers import BusDriver
-from cocotb.result import ReturnValue, TestError
-import random
 
 
 def sb_fn(actual_value):
-    assert actual_value == exp_value, "Scoreboard Matching Failed"
+    global exp_value
+    assert actual_value == exp_value.pop(0), "Scoreboard Matching Failed"
 
 
 @cocotb.test()
-async def ifc_test(dut):
+async def intf_test(dut):
     global exp_value
-    
-    #a = (10010110, 11100010)
-    exp_value = (101111000)
+    a = (0,0,1,1)
+    b = (0,1,0,1)
+    exp_value = [0,1,1,1]
 
     dut.RST_N.value = 1
-    await Timer(1, 'ps')
+    await Timer(1, 'ns')
     dut.RST_N.value = 0
-    await Timer(1, 'ps')
+    await Timer(1, 'ns')
     await RisingEdge(dut.CLK)
     dut.RST_N.value = 1
 
-    dut.din_en.value = 1
-    dut.len_en.value = 1
-    dut.len_value.value = 2
-    await Timer(2,'ns')
-    dut.din_rdy = 1
-    adrv = InputDriver(dut, 'din_value', dut.CLK)
-    OutputDriver(dut, 'dout_value', dut.CLK, sb_fn)
+    adrv = InputDriver(dut, 'a', dut.CLK)
+    bdrv = InputDriver(dut, 'b', dut.CLK)
+    OutputDriver(dut, 'y', dut.CLK, sb_fn)
 
-    for i in range(2):
-        adrv._driver_send(2)
-
-    
-    await(Timer(2,'ns'))
+    for i in range(4):
+        adrv.append(a[i])
+        bdrv.append(b[i])
+    while len(exp_value)>0:
+        await Timer(2,'ns')
 
 class InputDriver(BusDriver):
-    _signals = ["din_rdy", "din_en", "din_value"]
+    _signals = ["rdy", "en", "data"]
 
-    def __init__(self, dut, name, clk):
-        BusDriver.__init__(self, dut, name, clk)
-        self.bus.din_en= 0
-        self.clk = clk
+    def __init__(self, dut, name, CLK):
+        BusDriver.__init__(self, dut, name, CLK)
+        self.bus.en.value= 0
+        self.CLK = CLK
         
 
     async def _driver_send(self,value,sync=True):
-        for i in range(random.randint(0,20)):
-            await RisingEdge(self.clk)
-        if self.bus.din_rdy != 1:
-            await RisingEdge(self.bus.din_rdy)
-        self.bus.din_en.value = 1
-        self.bus.din_value = value
+        if self.bus.rdy.value != 1:
+            await RisingEdge(self.bus.rdy)
+        self.bus.en.value = 1
+        self.bus.data.value = value
         await ReadOnly()
-        await RisingEdge(self.clk)
-        self.bus.din_en.value = 0
+        await RisingEdge(self.CLK)
+        self.bus.en.value = 0
         await NextTimeStep()
 
 class OutputDriver(BusDriver):
-    _signals = ['dout_value', 'dout_rdy', 'dout_en']
+    _signals = [ 'rdy', 'en', 'data']
 
-    def __init__(self, dut, name, clk, sb_callback):
-        BusDriver.__init__(self, dut, name, clk)
-        self.bus.dout_en = 0
-        self.clk = clk
+    def __init__(self, dut, name, CLK, sb_callback):
+        BusDriver.__init__(self, dut, name, CLK)
+        self.bus.en.value = 0
+        self.CLK = CLK
         self.callback = sb_callback
+        self.append(0)
 
     async def _driver_send(self,value,sync=True):
         while True:
-            for i in range(random.randint(0,20)):
-                await RisingEdge(self.clk)
-            if self.bus.dout_rdy.value != 1:
-                await RisingEdge(self.clk)
-            self.bus.dout_en.value = 1
+            if self.bus.rdy.value != 1:
+                await RisingEdge(self.bus.rdy)
+            self.bus.en.value  = 1
             await ReadOnly()
-            self.callback(self.bus.dout_value.value)
-            await RisingEdge(self.clk)
-            self.bus.dout_en.value = 0
+            self.callback(self.bus.data.value)
+            await RisingEdge(self.CLK)
             await NextTimeStep()
-            self.bus.dout_en.value = 0
+            self.bus.en.value = 0
