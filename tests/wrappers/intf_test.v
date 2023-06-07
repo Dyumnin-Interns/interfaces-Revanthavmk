@@ -45,7 +45,7 @@ module intf_test(CLK,
 	  .y_rdy(y_rdy)
   );
 
-<<<<<<< HEAD
+
   initial begin
 	  $dumpfile("intf.vcd");
 	  $dumpvars;
@@ -55,7 +55,6 @@ module intf_test(CLK,
 	  end
   end
   endmodule
-=======
 dut intf(.CLK(CLK),
 		 .RST_N(RST_N),
 
@@ -87,4 +86,3 @@ dut intf(.CLK(CLK),
 			end	
         end
 endmodule
->>>>>>> 0d7210bdd17cbba5cac2077fc13b7dee264afbc1
